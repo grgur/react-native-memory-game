@@ -156,7 +156,49 @@ var Memory = React.createClass({
   handleCardPress(url: string, row: number, col: number) {
     console.log(url);
 
-    Animation.startAnimation(this.refs['card' + row + col].refs.image, 1400, 0, 'easeOut', {opacity: 1});
+    var board = this.state.board;
+    var previous = board.selected;
+    var selected = this.refs['card' + row + col];
+    var current = {
+        url: url,
+        node: selected
+    }
+
+    if (!previous) {
+        board.selected = current;
+        Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
+    } else if (previous.url === url) {
+        // AlertIOS.alert(
+        //     'Found one',
+        //     url,
+        //     [
+        //       {text: 'Oh Yeah!'},
+        //     ]
+        //   );
+
+        Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
+
+        setTimeout(
+            () => {
+                Animation.startAnimation(previous.node.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
+                Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
+            },
+            1000
+        );
+
+
+        board.selected = null;
+    } else {
+        Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
+        setTimeout(
+            () => {
+                Animation.startAnimation(previous.node.refs.image, 1400, 0, 'easeOut', {opacity: 0});
+                Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 0});
+            },
+            1000
+        );
+        board.selected = null;
+    }
 
     // AlertIOS.alert(
     //         'Clicked on',
