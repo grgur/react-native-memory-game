@@ -137,7 +137,7 @@ var Card = React.createClass({
             underlayColor="green"
             activeOpacity={0.5}>
             <View style={styles.card}>
-              <Image style={styles.cardImage} source={{uri: this.props.img}} />
+              <Image style={styles.cardImage} ref="image" source={{uri: this.props.img}} />
             </View>
           </TouchableHighlight>
         );
@@ -155,17 +155,16 @@ var Memory = React.createClass({
 
   handleCardPress(url: string, row: number, col: number) {
     console.log(url);
-    debugger;
 
-    Animation.startAnimation(this.refs['card' + row + col], 400, 0, 'linear', {opacity: 1});
+    Animation.startAnimation(this.refs['card' + row + col].refs.image, 1400, 0, 'easeOut', {opacity: 1});
 
-    AlertIOS.alert(
-            'Clicked on',
-            url,
-            [
-              {text: 'Oh Yeah!'},
-            ]
-          )
+    // AlertIOS.alert(
+    //         'Clicked on',
+    //         url,
+    //         [
+    //           {text: 'Oh Yeah!'},
+    //         ]
+    //       )
 
     return;
 
@@ -245,7 +244,7 @@ var styles = StyleSheet.create({
     resizeMode: Image.resizeMode.cover,
     width: 80,
     height: 80,
-    opacity: 0.5
+    opacity: 0
   },
 
   cardImageVisible: {
