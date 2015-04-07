@@ -129,12 +129,43 @@ class Board {
 
 
 var Card = React.createClass({
+    getInitialState() {
+        return {
+            paired: false,
+            visible: false
+        }
+    },
+
+    onPress() {
+        var state = this.state;
+
+        if (state.paired || state.visible) {
+            return;
+        }
+
+        this.show();
+
+        this.props.onPress();
+    },
+
+    show() {
+        this.setState({visible: true});
+    },
+
+    setPaired() {
+        this.setState({paired: true});
+    },
+
+    hide() {
+        this.setState({visible: false});
+    },
+
     render() {
         return (
           <TouchableHighlight
-            onPress={this.props.onPress}
-            // underlayColor="transparent"
-            underlayColor="green"
+            onPress={this.onPress}
+            underlayColor="transparent"
+            // underlayColor="green"
             activeOpacity={0.5}>
             <View style={styles.card}>
               <Image style={styles.cardImage} ref="image" source={{uri: this.props.img}} />
@@ -154,8 +185,6 @@ var Memory = React.createClass({
   },
 
   handleCardPress(url: string, row: number, col: number) {
-    console.log(url);
-
     var board = this.state.board;
     var previous = board.selected;
     var selected = this.refs['card' + row + col];
@@ -178,6 +207,9 @@ var Memory = React.createClass({
 
         Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
 
+        previous.node.setPaired();
+        selected.setPaired();
+
         setTimeout(
             () => {
                 Animation.startAnimation(previous.node.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
@@ -189,11 +221,14 @@ var Memory = React.createClass({
 
         board.selected = null;
     } else {
+        // missed hit
         Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
         setTimeout(
             () => {
                 Animation.startAnimation(previous.node.refs.image, 1400, 0, 'easeOut', {opacity: 0});
                 Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 0});
+                selected.hide();
+                previous.node.hide();
             },
             1000
         );
