@@ -70,19 +70,23 @@ class Board {
     constructor(numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
-        var cards = this.cards = this.getCards();
+
+        var numberOfCards = numRows * numCols / 2;
+        var cards = this.cards = this.getCards(numberOfCards);
         this.createGrid();
     }
 
-    getCards(): Array {
-        var playingCards = [
+    getCards(numberOfCards: number): Array {
+        var playingCards = this.arrayShuffle([
             'http://www.picgifs.com/disney-gifs/disney-gifs/disney-glitter/disney-graphics-disney-glitter-017763.gif',
             'http://www.picgifs.com/disney-gifs/disney-gifs/disney-glitter/disney-graphics-disney-glitter-953286.gif',
             'http://www.picgifs.com/disney-gifs/disney-gifs/belle-and-the-beast/disney-graphics-belle-and-the-beast-928628.gif',
             'http://www.picgifs.com/disney-gifs/disney-gifs/dumbo/disney-graphics-dumbo-193099.gif',
             'http://www.picgifs.com/disney-gifs/disney-gifs/peter-pan/disney-graphics-peter-pan-107140.gif',
-            'http://www.picgifs.com/disney-gifs/disney-gifs/madagascar/disney-graphics-madagascar-224386.jpg'
-        ];
+            'http://www.picgifs.com/disney-gifs/disney-gifs/madagascar/disney-graphics-madagascar-224386.jpg',
+            'http://www.picgifs.com/disney-gifs/disney-gifs/tweety-and-sylvester/disney-graphics-tweety-and-sylvester-481783.gif',
+            'http://www.picgifs.com/disney-gifs/disney-gifs/ariel/animaatjes-ariel-0232913.gif'
+        ]).slice(0, numberOfCards);
 
         var deck = playingCards.concat(playingCards);
 
@@ -164,14 +168,28 @@ var Card = React.createClass({
     },
 
     render() {
+        var state = this.state,
+            imageStyles = [styles.cardImage],
+            cardStyles = [styles.card];
+
+        if (state.visible === true) {
+            imageStyles.push(styles.cardImageVisible);
+            cardStyles.push(styles.cardVisible);
+        }
+
+        if (state.paired === true) {
+            imageStyles.push(styles.cardImagePaired);
+            cardStyles.push(styles.cardPaired);
+        }
+
         return (
           <TouchableHighlight
             onPress={this.onPress}
             underlayColor="transparent"
             // underlayColor="green"
             activeOpacity={0.5}>
-            <View style={styles.card}>
-              <Image style={styles.cardImage} ref="image" source={{uri: this.props.img}} />
+            <View style={cardStyles}>
+              <Image style={imageStyles} ref="image" source={{uri: this.props.img}} />
             </View>
           </TouchableHighlight>
         );
@@ -180,7 +198,7 @@ var Card = React.createClass({
 
 var Memory = React.createClass({
   getInitialState() {
-    return { board: new Board(), turns: 0 };
+    return { board: new Board(4, 4), turns: 0 };
   },
 
   restartGame() {
@@ -197,17 +215,10 @@ var Memory = React.createClass({
     }
 
     if (!previous) {
+        // first card
         board.selected = current;
     } else if (previous.url === url) {
-        // AlertIOS.alert(
-        //     'Found one',
-        //     url,
-        //     [
-        //       {text: 'Oh Yeah!'},
-        //     ]
-        //   );
-
-
+        // successful hit
         previous.node.setPaired();
         selected.setPaired();
 
@@ -223,15 +234,6 @@ var Memory = React.createClass({
         );
         board.selected = null;
     }
-
-    // AlertIOS.alert(
-    //         'Clicked on',
-    //         url,
-    //         [
-    //           {text: 'Oh Yeah!'},
-    //         ]
-    //       )
-
     return;
 
     if (this.state.board.hasMark(row, col)) {
@@ -295,6 +297,7 @@ var styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    rotation: 180
   },
   card: {
     width: 80,
@@ -314,8 +317,20 @@ var styles = StyleSheet.create({
   },
 
   cardImageVisible: {
-    opacity: 1
-  }
+    opacity: 1  
+  },
+
+  cardImagePaired: {
+    opacity: 0.5
+  },
+
+  cardPaired: {
+    backgroundColor: '#507757'
+  },
+
+  cardVisible: {
+    backgroundColor: '#fff'
+  },
 });
 
 AppRegistry.registerComponent('Memory', () => Memory);
