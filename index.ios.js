@@ -150,14 +150,17 @@ var Card = React.createClass({
 
     show() {
         this.setState({visible: true});
+        Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 1});
     },
 
     setPaired() {
         this.setState({paired: true});
+        Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
     },
 
     hide() {
         this.setState({visible: false});
+        Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0});
     },
 
     render() {
@@ -195,7 +198,6 @@ var Memory = React.createClass({
 
     if (!previous) {
         board.selected = current;
-        Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
     } else if (previous.url === url) {
         // AlertIOS.alert(
         //     'Found one',
@@ -205,28 +207,15 @@ var Memory = React.createClass({
         //     ]
         //   );
 
-        Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
 
         previous.node.setPaired();
         selected.setPaired();
 
-        setTimeout(
-            () => {
-                Animation.startAnimation(previous.node.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
-                Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
-            },
-            1000
-        );
-
-
         board.selected = null;
     } else {
         // missed hit
-        Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 1});
         setTimeout(
             () => {
-                Animation.startAnimation(previous.node.refs.image, 1400, 0, 'easeOut', {opacity: 0});
-                Animation.startAnimation(selected.refs.image, 1400, 0, 'easeOut', {opacity: 0});
                 selected.hide();
                 previous.node.hide();
             },
