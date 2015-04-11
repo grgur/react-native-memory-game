@@ -48,7 +48,8 @@ var Memory = React.createClass({
         this.setState({board: board.pair(1)});
     } else {
         // missed hit
-        this.state.board.lock();
+        board.miss(true);
+        
         setTimeout(
             () => {
                 selected.hide();
@@ -56,7 +57,6 @@ var Memory = React.createClass({
             },
             1000
         );
-        board.selected = null;
     }
   },
 
@@ -101,12 +101,14 @@ var Memory = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Memory Game</Text>
-        
         <View style={styles.board}>
           {rows}
         </View>
 
-        <Scoreboard player1={board.score.player1} player2={0} />
+        <Scoreboard 
+            player1={board.score.player1} 
+            player2={board.score.player2} 
+        />
 
         <TouchableHighlight
             onPress={this.onRestartPress}

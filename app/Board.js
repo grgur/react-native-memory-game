@@ -41,10 +41,18 @@ class Board {
      */
     score: object;
 
+    /**
+     * Number of player whose turn it is
+     * @type {[type]}
+     */
+    turn: number;
+
     constructor(numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
         this.isLocked = false;
+
+        this.turn = 1;
 
         this.score = {
             player1: 0,
@@ -126,11 +134,34 @@ class Board {
     /**
      * Process successful match
      * @param  {number} player Player number, used to increment score
-     * @return {Object} Board
+     * @return {Board} Board
      */
-    pair(player: number) {
+    pair() {
+        var player = this.turn;
+
         this.score['player' + player] += 1;
         this.selected = null;
+
+        return this;
+    }
+
+    finishTurn() {
+        this.turn = this.turn === 1 ? 2 : 1;
+    }
+
+    /**
+     * Process missed try
+     * @param  {Boolean} lock True to lock the grid
+     * @return {Board}  Board
+     */
+    miss(lock: boolean) {
+        this.selected = null;
+
+        if (lock) {
+            this.lock()
+        }
+
+        this.finishTurn();
 
         return this;
     }
