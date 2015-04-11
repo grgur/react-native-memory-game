@@ -20,7 +20,7 @@ var Card = React.createClass({
     onPress() {
         var state = this.state;
 
-        if (state.paired || state.visible) {
+        if (state.paired || state.visible || !this.props.canShow()) {
             return;
         }
 
@@ -42,6 +42,7 @@ var Card = React.createClass({
     hide() {
         this.setState({visible: false});
         Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0});
+        this.props.onHide();
     },
 
     render() {

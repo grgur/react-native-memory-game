@@ -45,6 +45,7 @@ var Memory = React.createClass({
         board.selected = null;
     } else {
         // missed hit
+        this.state.board.lock();
         setTimeout(
             () => {
                 selected.hide();
@@ -54,12 +55,14 @@ var Memory = React.createClass({
         );
         board.selected = null;
     }
-    return;
+  },
 
-    this.setState({
-      board: this.state.board.mark(row, col, this.state.player),
-      player: this.nextPlayer(),
-    });
+  onCardHide() {
+    this.state.board.unlock();
+  },
+
+  canShow() {
+    return !this.state.board.isLocked;
   },
 
   render() {
@@ -71,6 +74,8 @@ var Memory = React.createClass({
             ref={'card' + row + col}
             img={imgUrl}
             onPress={this.handleCardPress.bind(this, imgUrl, row, col)}
+            onHide={this.onCardHide}
+            canShow={this.canShow}
           />
         )}
       </View>

@@ -29,9 +29,16 @@ class Board {
      */
     found: number;
 
+    /**
+     * Flag that tells us whether card flipping is allowed
+     * @type {Boolean}
+     */
+    isLocked: boolean;
+
     constructor(numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
+        this.isLocked = false;
 
         var numberOfCards = numRows * numCols / 2;
         var cards = this.cards = this.getCards(numberOfCards);
@@ -90,6 +97,16 @@ class Board {
         }
 
         this.grid = grid;
+    }
+
+    lock(): Boolean {
+        this.isLocked = true;
+        return true;
+    }
+
+    unlock(): Boolean {
+        this.isLocked = false;
+        return true;
     }
 }
 
