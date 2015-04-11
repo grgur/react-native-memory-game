@@ -35,10 +35,21 @@ class Board {
      */
     isLocked: boolean;
 
+    /**
+     * Score tracker
+     * @type {Object}
+     */
+    score: object;
+
     constructor(numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
         this.isLocked = false;
+
+        this.score = {
+            player1: 0,
+            player2: 0
+        }
 
         var numberOfCards = numRows * numCols / 2;
         var cards = this.cards = this.getCards(numberOfCards);
@@ -90,7 +101,10 @@ class Board {
         for (var i = 0; i < numRows; i++) {
             var row = Array(numCols);
             for (var j = 0; j < numCols; j++) {
-                row[j] = cards[index];
+                row[j] = {
+                    url: cards[index],
+                    hidden: true
+                }
                 index++;
             }
             grid[i] = row;
@@ -107,6 +121,18 @@ class Board {
     unlock(): Boolean {
         this.isLocked = false;
         return true;
+    }
+
+    /**
+     * Process successful match
+     * @param  {number} player Player number, used to increment score
+     * @return {Object} Board
+     */
+    pair(player: number) {
+        this.score['player' + player] += 1;
+        this.selected = null;
+
+        return this;
     }
 }
 

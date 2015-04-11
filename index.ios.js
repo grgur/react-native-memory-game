@@ -7,6 +7,7 @@
 var React = require('react-native');
 var Board = require('./app/Board');
 var Card = require('./app/Card');
+var Scoreboard = require('./app/Scoreboard');
 
 var {
   AppRegistry,
@@ -44,7 +45,7 @@ var Memory = React.createClass({
         previous.node.setPaired();
         selected.setPaired();
 
-        board.selected = null;
+        this.setState({board: board.pair(1)});
     } else {
         // missed hit
         this.state.board.lock();
@@ -79,17 +80,19 @@ var Memory = React.createClass({
   },
 
   render() {
-    var rows = this.state.board.grid.map((cards, row) =>
+    var board = this.state.board;
+
+    var rows = board.grid.map((cards, row) =>
       <View key={'row' + row} ref={'row' + row} style={styles.row}>
-        {cards.map((imgUrl, col) =>
+        {cards.map((cardCfg, col) =>
           <Card
             key={'col' + col}
             ref={'card' + row + col}
-            img={imgUrl}
-            onPress={this.handleCardPress.bind(this, imgUrl, row, col)}
+            img={cardCfg.url}
+            onPress={this.handleCardPress.bind(this, cardCfg.url, row, col)}
             onHide={this.onCardHide}
             canShow={this.canShow}
-            hidden={true}
+            cardCfg={cardCfg}
           />
         )}
       </View>
@@ -104,10 +107,10 @@ var Memory = React.createClass({
         <TouchableHighlight
             onPress={this.onRestartPress}
             underlayColor="transparent"
-            // underlayColor="green"
             activeOpacity={0.5}>
             <Text style={styles.restartbtn}>Restart</Text>
           </TouchableHighlight>
+          <Scoreboard player1={board.score.player1} player2={0} />
       </View>
     );
   }

@@ -22,7 +22,7 @@ var Card = React.createClass({
      * @param  {Object} nextProps Properties to receive
      */
     componentWillReceiveProps (nextProps) {
-        if (nextProps.hidden === true) {
+        if (nextProps.cardCfg.hidden === true) {
             this.setState({
                 visible: false,
                 paired: false
@@ -49,13 +49,14 @@ var Card = React.createClass({
 
     setPaired() {
         this.setState({paired: true});
+        this.props.cardCfg.hidden = false;
         Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
     },
 
     hide() {
         this.setState({visible: false});
         Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0});
-        this.props.hidden = true;
+        this.props.cardCfg.hidden = true;
         this.props.onHide();
     },
 
