@@ -79,7 +79,9 @@ var styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 5,
-    backgroundColor: '#7b8994',
+    backgroundColor: '#2DBE99',
+    borderColor: '#068981',
+    borderWidth: 2,
     margin: 5,
     flex: 1,
     justifyContent: 'center',
@@ -101,7 +103,8 @@ var styles = StyleSheet.create({
   },
 
   cardPaired: {
-    backgroundColor: '#507757'
+    backgroundColor: '#F4F9CB',
+    borderColor: '#89E0B9'
   },
 
   cardVisible: {

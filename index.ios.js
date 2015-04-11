@@ -56,10 +56,6 @@ var Memory = React.createClass({
     }
     return;
 
-    if (this.state.board.hasMark(row, col)) {
-      return;
-    }
-
     this.setState({
       board: this.state.board.mark(row, col, this.state.player),
       player: this.nextPlayer(),
@@ -82,7 +78,7 @@ var Memory = React.createClass({
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Memory</Text>
+        <Text style={styles.title}>Memory Game</Text>
         <View style={styles.board}>
           {rows}
         </View>
@@ -96,16 +92,17 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: '#F4F9CB'
   },
   title: {
-    fontFamily: 'Chalkduster',
+    fontFamily: 'ChalkboardSE-Bold',
     fontSize: 39,
     marginBottom: 20,
+    color: '#535659',
   },
   board: {
     padding: 5,
-    backgroundColor: '#47525d',
+    backgroundColor: 'transparent',
     borderRadius: 10,
   },
   row: {
