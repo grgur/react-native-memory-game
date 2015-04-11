@@ -6,24 +6,40 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>E383201D-3469-4701-8D99-34716156F36A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Memory</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>16CE14A2D81CCE323D476004724594AEF6B38C0A</key>
 		<string>github.com:facebook/react-native.git</string>
+		<key>D810957D51493F10B8ABF9989EDF1ECBA69CA39C</key>
+		<string>github.com:grgur/react-native-memory-game.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Memory.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>16CE14A2D81CCE323D476004724594AEF6B38C0A</key>
-		<string>react-native/</string>
+		<string>../../../../../sdk/react-native</string>
+		<key>D810957D51493F10B8ABF9989EDF1ECBA69CA39C</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:facebook/react-native.git</string>
+	<string>github.com:grgur/react-native-memory-game.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>16CE14A2D81CCE323D476004724594AEF6B38C0A</string>
+	<string>D810957D51493F10B8ABF9989EDF1ECBA69CA39C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D810957D51493F10B8ABF9989EDF1ECBA69CA39C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Memory</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

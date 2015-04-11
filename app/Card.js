@@ -6,16 +6,18 @@ var {
   View,
   Image,
   TouchableHighlight,
-  Animation,
 } = React;
 
-var Card = React.createClass({
-    getInitialState() {
-        return {
+var AnimationExperimental = require('AnimationExperimental');
+
+class Card extends React.Component {
+    constructor(properties) {
+        super(properties);
+        this.state = {
             paired: false,
             visible: false
-        }
-    },
+        };
+    }
 
     /**
      * Only happens on game reset so we reset card styles
@@ -28,7 +30,7 @@ var Card = React.createClass({
                 paired: false
             });
         }
-    },
+    }
 
     onPress() {
         var state = this.state;
@@ -40,25 +42,36 @@ var Card = React.createClass({
         this.show();
 
         this.props.onPress();
-    },
+    }
 
     show() {
         this.setState({visible: true});
-        Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 1});
-    },
+        AnimationExperimental.startAnimation({
+            node: this.refs.image,
+            duration: 400,
+            easing: 'easeOutQuad',
+            property: 'opacity',
+            toValue: 1,
+        });
+    }
 
     setPaired() {
         this.setState({paired: true});
         this.props.cardCfg.hidden = false;
-        Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0.1});
-    },
+        AnimationExperimental.startAnimation({
+            node: this.refs.image,
+            duration: 400,
+            easing: 'easeInQuad',
+            property: 'opacity',
+            toValue: 0.1,
+        });
+    }
 
     hide() {
         this.setState({visible: false});
-        Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0});
         this.props.cardCfg.hidden = true;
         this.props.onHide();
-    },
+    }
 
     render() {
         var state = this.state,
@@ -77,9 +90,8 @@ var Card = React.createClass({
 
         return (
           <TouchableHighlight
-            onPress={this.onPress}
+            onPress={this.onPress.bind(this)}
             underlayColor="transparent"
-            // underlayColor="green"
             activeOpacity={0.5}>
             <View style={cardStyles}>
               <Image style={imageStyles} ref="image" source={{uri: this.props.img}} />
@@ -87,7 +99,7 @@ var Card = React.createClass({
           </TouchableHighlight>
         );
     }
-});
+};
 
 
 var styles = StyleSheet.create({
