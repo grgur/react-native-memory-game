@@ -101,16 +101,19 @@ var Memory = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Memory Game</Text>
+        
         <View style={styles.board}>
           {rows}
         </View>
+
+        <Scoreboard player1={board.score.player1} player2={0} />
+
         <TouchableHighlight
             onPress={this.onRestartPress}
             underlayColor="transparent"
             activeOpacity={0.5}>
             <Text style={styles.restartbtn}>Restart</Text>
           </TouchableHighlight>
-          <Scoreboard player1={board.score.player1} player2={0} />
       </View>
     );
   }
