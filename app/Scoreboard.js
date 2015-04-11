@@ -6,13 +6,13 @@ var {
   View,
 } = React;
 
-var Scoreboard = React.createClass({
+class Scoreboard extends React.Component {
     getDefaultProps() {
         return {
             player1: 0,
             player2: 0
         }
-    },    
+    }
 
     render() {
         var score1Style = [styles.score];
@@ -23,11 +23,11 @@ var Scoreboard = React.createClass({
         switch (this.props.board.turn) {
           case 1: 
             score1Style.push(styles.turn);
-            score1TextStyle.push(styles.turn);
+            score1TextStyle.push(styles.turnText);
             break;
           case 2: 
             score2Style.push(styles.turn);
-            score2TextStyle.push(styles.turn);
+            score2TextStyle.push(styles.turnText);
             break;
         }
 
@@ -45,7 +45,7 @@ var Scoreboard = React.createClass({
           </View>
         );
     }
-});
+};
 
 
 var styles = StyleSheet.create({
@@ -71,6 +71,8 @@ var styles = StyleSheet.create({
   },
   turn: { // let's see what happens when we share view and text styles
     borderColor: '#068981',
+  },
+  turnText: {
     color: '#D9304F',
   }
 });
