@@ -45,7 +45,7 @@ var Memory = React.createClass({
         previous.node.setPaired();
         selected.setPaired();
 
-        this.setState({board: board.pair(1)});
+        this.setState({board: board.pair()});
     } else {
         // missed hit
         board.miss(true);
@@ -54,6 +54,7 @@ var Memory = React.createClass({
             () => {
                 selected.hide();
                 previous.node.hide();
+                this.setState({board: board});
             },
             1000
         );
@@ -107,7 +108,8 @@ var Memory = React.createClass({
 
         <Scoreboard 
             player1={board.score.player1} 
-            player2={board.score.player2} 
+            player2={board.score.player2}
+            board={board}
         />
 
         <TouchableHighlight
@@ -146,7 +148,7 @@ var styles = StyleSheet.create({
   restartbtn: {
     fontFamily: 'ChalkboardSE-Bold',
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 25,
     color: '#535659',
   }
 });
