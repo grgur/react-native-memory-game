@@ -69,13 +69,13 @@ var Memory = React.createClass({
 
   onRestartPress() {
     AlertIOS.alert(
-            'Restart',
-            'Are you sure you want to restart game?',
-            [
-              {text: 'No'},
-              {text: 'Restart', onPress: this.restartGame}
-            ]
-          )
+        'Restart',
+        'Are you sure you want to restart game?',
+        [
+          {text: 'No'},
+          {text: 'Restart', onPress: this.restartGame}
+      ]
+    );
   },
 
   render() {
