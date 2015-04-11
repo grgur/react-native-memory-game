@@ -17,6 +17,19 @@ var Card = React.createClass({
         }
     },
 
+    /**
+     * Only happens on game reset so we reset card styles
+     * @param  {Object} nextProps Properties to receive
+     */
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.hidden === true) {
+            this.setState({
+                visible: false,
+                paired: false
+            });
+        }
+    },
+
     onPress() {
         var state = this.state;
 
@@ -42,6 +55,7 @@ var Card = React.createClass({
     hide() {
         this.setState({visible: false});
         Animation.startAnimation(this.refs.image, 1400, 0, 'easeOut', {opacity: 0});
+        this.props.hidden = true;
         this.props.onHide();
     },
 

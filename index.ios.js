@@ -13,6 +13,8 @@ var {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight,
+  AlertIOS
 } = React;
 
 
@@ -65,6 +67,17 @@ var Memory = React.createClass({
     return !this.state.board.isLocked;
   },
 
+  onRestartPress() {
+    AlertIOS.alert(
+            'Restart',
+            'Are you sure you want to restart game?',
+            [
+              {text: 'No'},
+              {text: 'Restart', onPress: this.restartGame}
+            ]
+          )
+  },
+
   render() {
     var rows = this.state.board.grid.map((cards, row) =>
       <View key={'row' + row} ref={'row' + row} style={styles.row}>
@@ -76,6 +89,7 @@ var Memory = React.createClass({
             onPress={this.handleCardPress.bind(this, imgUrl, row, col)}
             onHide={this.onCardHide}
             canShow={this.canShow}
+            hidden={true}
           />
         )}
       </View>
@@ -87,6 +101,13 @@ var Memory = React.createClass({
         <View style={styles.board}>
           {rows}
         </View>
+        <TouchableHighlight
+            onPress={this.onRestartPress}
+            underlayColor="transparent"
+            // underlayColor="green"
+            activeOpacity={0.5}>
+            <Text style={styles.restartbtn}>Restart</Text>
+          </TouchableHighlight>
       </View>
     );
   }
@@ -114,6 +135,12 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     rotation: 180
   },
+  restartbtn: {
+    fontFamily: 'ChalkboardSE-Bold',
+    fontSize: 16,
+    marginTop: 10,
+    color: '#535659',
+  }
 });
 
 AppRegistry.registerComponent('Memory', () => Memory);
