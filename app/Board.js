@@ -47,12 +47,19 @@ class Board {
      */
     turn: number;
 
+    /**
+     * Number of flips (turns) for each players
+     * @type {number[]}
+     */
+    flips: Array<number>;
+
     constructor(numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
         this.isLocked = false;
 
         this.turn = 1;
+        this.flips = [0,0];
 
         this.score = {
             player1: 0,
@@ -142,11 +149,18 @@ class Board {
         this.score['player' + player] += 1;
         this.selected = null;
 
+        this.incrementFlips();
+
         return this;
     }
 
     finishTurn() {
+        this.incrementFlips();
         this.turn = this.turn === 1 ? 2 : 1;
+    }
+
+    incrementFlips() {
+        this.flips[this.turn - 1] += 1;
     }
 
     /**

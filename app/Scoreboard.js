@@ -19,8 +19,9 @@ class Scoreboard extends React.Component {
         var score2Style = [styles.score];
         var score1TextStyle = [styles.scoreText];
         var score2TextStyle = [styles.scoreText];
+        var board = this.props.board;
 
-        switch (this.props.board.turn) {
+        switch (board.turn) {
           case 1: 
             score1Style.push(styles.turn);
             score1TextStyle.push(styles.turnText);
@@ -32,15 +33,17 @@ class Scoreboard extends React.Component {
         }
 
         return (
-          <View style={styles.board}>
-            <View style={score1Style}>
-              <Text style={score1TextStyle}>{this.props.player1}</Text>
+          <View style={styles.board}> 
+            <View key="player1" style={score1Style}>
+              <Text key="flips" style={styles.numberOfTurnsText}>{board.flips[0]}</Text>
+              <Text key="score" style={score1TextStyle}>{this.props.player1}</Text>
             </View>
 
-            <Text style={styles.scoreText}>:</Text>
+            <Text style={styles.divider}>:</Text>
 
-            <View style={score2Style}>
-              <Text style={score2TextStyle}>{this.props.player2}</Text>
+            <View key="player2" style={score2Style}>
+              <Text key="flips" style={styles.numberOfTurnsText}>{board.flips[1]}</Text>
+              <Text key="score" style={score2TextStyle}>{this.props.player2}</Text>
             </View>
           </View>
         );
@@ -67,14 +70,28 @@ var styles = StyleSheet.create({
     fontFamily: 'ChalkboardSE-Bold',
     fontSize: 32,
     color: '#535659',
-    padding: 4
+    padding: 2,
+    lineHeight: 30
+
   },
-  turn: { // let's see what happens when we share view and text styles
+  turn: {
     borderColor: '#068981',
   },
   turnText: {
     color: '#D9304F',
+  },
+  numberOfTurnsText: {
+    fontFamily: 'ChalkboardSE-Bold',
+    color: "#068981",
+    fontSize: 12
+  },
+  divider: {
+    fontFamily: 'ChalkboardSE-Bold',
+    fontSize: 32,
+    color: '#535659',
+    padding: 2,
   }
+
 });
 
 module.exports = Scoreboard;
