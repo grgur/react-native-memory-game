@@ -22,7 +22,7 @@ var {
 
 var Memory = React.createClass({
   getInitialState() {
-    return { board: new Board(2, 2), players: 2 };
+    return { board: new Board(4, 4), players: 1 };
   },
 
   restartGame() {
