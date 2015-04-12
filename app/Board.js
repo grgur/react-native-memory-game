@@ -37,13 +37,13 @@ class Board {
 
     /**
      * Score tracker
-     * @type {Object}
+     * @type {number[]}
      */
-    score: object;
+    score: Array<number>;
 
     /**
      * Number of player whose turn it is
-     * @type {[type]}
+     * @type {number}
      */
     turn: number;
 
@@ -53,18 +53,21 @@ class Board {
      */
     flips: Array<number>;
 
-    constructor(numRows, numCols) {
+    /**
+     * Number of players (1 or 2)
+     * @type {number}
+     */
+    numPlayers: number;
+
+    constructor(numPlayers, numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
+        this.numPlayers = numPlayers || 1;
         this.isLocked = false;
 
-        this.turn = 1;
+        this.turn = 0;
         this.flips = [0,0];
-
-        this.score = {
-            player1: 0,
-            player2: 0
-        }
+        this.score = [0,0]
 
         var numberOfCards = numRows * numCols / 2;
         var cards = this.cards = this.getCards(numberOfCards);
@@ -146,7 +149,7 @@ class Board {
     pair() {
         var player = this.turn;
 
-        this.score['player' + player] += 1;
+        this.score[player] += 1;
         this.selected = null;
 
         this.incrementFlips();
@@ -156,11 +159,11 @@ class Board {
 
     finishTurn() {
         this.incrementFlips();
-        this.turn = this.turn === 1 ? 2 : 1;
+        this.turn = this.turn === 0 ? 1 : 0;
     }
 
     incrementFlips() {
-        this.flips[this.turn - 1] += 1;
+        this.flips[this.turn] += 1;
     }
 
     /**

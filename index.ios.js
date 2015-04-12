@@ -7,7 +7,8 @@
 var React = require('react-native');
 var Board = require('./app/Board');
 var Card = require('./app/Card');
-var Scoreboard = require('./app/Scoreboard');
+var ScoreboardForOne = require('./app/ScoreboardForOne');
+var ScoreboardForTwo = require('./app/ScoreboardForTwo');
 
 var {
   AppRegistry,
@@ -21,7 +22,7 @@ var {
 
 var Memory = React.createClass({
   getInitialState() {
-    return { board: new Board(4, 4), turns: 0 };
+    return { board: new Board(1, 4, 4), turns: 0 };
   },
 
   restartGame() {
@@ -80,6 +81,20 @@ var Memory = React.createClass({
     );
   },
 
+  getScoreboard() {
+      var board = this.state.board;
+
+      if (board.numPlayers === 1) {
+        return (
+            <ScoreboardForOne board={board}/>
+        )
+      }
+
+      return (
+          <ScoreboardForTwo board={board}/>
+      )
+  },
+
   render() {
     var board = this.state.board;
 
@@ -106,11 +121,7 @@ var Memory = React.createClass({
           {rows}
         </View>
 
-        <Scoreboard 
-            player1={board.score.player1} 
-            player2={board.score.player2}
-            board={board}
-        />
+        {this.getScoreboard()}
 
         <TouchableHighlight
             onPress={this.onRestartPress}

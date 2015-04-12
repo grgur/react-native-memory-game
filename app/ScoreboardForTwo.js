@@ -6,14 +6,7 @@ var {
   View,
 } = React;
 
-class Scoreboard extends React.Component {
-    getDefaultProps() {
-        return {
-            player1: 0,
-            player2: 0
-        }
-    }
-
+class ScoreboardForTwo extends React.Component {
     render() {
         var score1Style = [styles.score];
         var score2Style = [styles.score];
@@ -22,11 +15,11 @@ class Scoreboard extends React.Component {
         var board = this.props.board;
 
         switch (board.turn) {
-          case 1: 
+          case 0: 
             score1Style.push(styles.turn);
             score1TextStyle.push(styles.turnText);
             break;
-          case 2: 
+          case 1: 
             score2Style.push(styles.turn);
             score2TextStyle.push(styles.turnText);
             break;
@@ -36,14 +29,14 @@ class Scoreboard extends React.Component {
           <View style={styles.board}> 
             <View key="player1" style={score1Style}>
               <Text key="flips" style={styles.numberOfTurnsText}>{board.flips[0]}</Text>
-              <Text key="score" style={score1TextStyle}>{this.props.player1}</Text>
+              <Text key="score" style={score1TextStyle}>{board.score[0]}</Text>
             </View>
 
             <Text style={styles.divider}>:</Text>
 
             <View key="player2" style={score2Style}>
               <Text key="flips" style={styles.numberOfTurnsText}>{board.flips[1]}</Text>
-              <Text key="score" style={score2TextStyle}>{this.props.player2}</Text>
+              <Text key="score" style={score2TextStyle}>{board.score[1]}</Text>
             </View>
           </View>
         );
@@ -94,4 +87,4 @@ var styles = StyleSheet.create({
 
 });
 
-module.exports = Scoreboard;
+module.exports = ScoreboardForTwo;
