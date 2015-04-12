@@ -53,16 +53,9 @@ class Board {
      */
     flips: Array<number>;
 
-    /**
-     * Number of players (1 or 2)
-     * @type {number}
-     */
-    numPlayers: number;
-
-    constructor(numPlayers, numRows, numCols) {
+    constructor(numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
-        this.numPlayers = numPlayers || 1;
         this.isLocked = false;
 
         this.turn = 0;

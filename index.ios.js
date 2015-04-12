@@ -22,7 +22,7 @@ var {
 
 var Memory = React.createClass({
   getInitialState() {
-    return { board: new Board(1, 4, 4), turns: 0 };
+    return { board: new Board(4, 4), players: 1 };
   },
 
   restartGame() {
@@ -81,18 +81,38 @@ var Memory = React.createClass({
     );
   },
 
+  makeSinglePlayer() {
+    this.setState({players: 1});
+  },
+
+  makeMultiPlayer() {
+    this.setState({players: 2});
+  },
+
   getScoreboard() {
       var board = this.state.board;
 
-      if (board.numPlayers === 1) {
-        return (
-            <ScoreboardForOne board={board}/>
-        )
+      if (this.state.players === 1) {
+        return <ScoreboardForOne board={board}/>;
       }
 
-      return (
-          <ScoreboardForTwo board={board}/>
-      )
+      return <ScoreboardForTwo board={board}/>;
+  },
+
+  getPlayerToggleButtons() {
+    return (
+        <View style={styles.playerToggleButtons}>
+            <TouchableHighlight onPress={this.makeSinglePlayer} underlayColor="transparent" activeOpacity={0.5}>
+                <Text style={styles.buttonText}>👤 Single Player</Text>
+            </TouchableHighlight>
+
+            <Text style={styles.buttonText}> - </Text>
+
+            <TouchableHighlight onPress={this.makeMultiPlayer} underlayColor="transparent" activeOpacity={0.5}>
+                <Text style={styles.buttonText}>👥Two Players</Text>
+            </TouchableHighlight>
+        </View>
+    );
   },
 
   render() {
@@ -117,6 +137,9 @@ var Memory = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Memory Game</Text>
+
+        {this.getPlayerToggleButtons()}
+
         <View style={styles.board}>
           {rows}
         </View>
@@ -127,7 +150,7 @@ var Memory = React.createClass({
             onPress={this.onRestartPress}
             underlayColor="transparent"
             activeOpacity={0.5}>
-            <Text style={styles.restartbtn}>Restart</Text>
+            <Text style={styles.buttonText}>🔄 Restart</Text>
           </TouchableHighlight>
       </View>
     );
@@ -144,7 +167,7 @@ var styles = StyleSheet.create({
   title: {
     fontFamily: 'ChalkboardSE-Bold',
     fontSize: 39,
-    marginBottom: 20,
+    marginBottom: 0,
     color: '#535659',
   },
   board: {
@@ -156,11 +179,17 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     rotation: 180
   },
-  restartbtn: {
+  buttonText: {
     fontFamily: 'ChalkboardSE-Bold',
     fontSize: 16,
     marginTop: 25,
     color: '#535659',
+  },
+  buttonActiveText: {
+    color: '#D9304F',
+  },
+  playerToggleButtons: {
+    flexDirection: 'row',
   }
 });
 
