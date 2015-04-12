@@ -82,8 +82,9 @@ var Memory = React.createClass({
             } else {
                 msg = `Player ${board.flips[0] > board.flips[1] ? 1 : 2} won!`;
             }
+        } else {
+            msg = `Player ${board.score[0] > board.score[1] ? 1 : 2} won!`;
         }
-        msg = `Player ${board.score[0] > board.score[1] ? 1 : 2} won!`;
     }
 
     AlertIOS.alert(
