@@ -53,6 +53,12 @@ class Board {
      */
     flips: Array<number>;
 
+    /**
+     * Maximum possible score
+     * @type {number}
+     */
+    maxScore: number;
+
     constructor(numRows, numCols) {
         this.numRows = numRows || 4;
         this.numCols = numCols || 4;
@@ -63,6 +69,8 @@ class Board {
         this.score = [0,0]
 
         var numberOfCards = numRows * numCols / 2;
+        this.maxScore = numberOfCards;
+        
         var cards = this.cards = this.getCards(numberOfCards);
         this.createGrid();
     }

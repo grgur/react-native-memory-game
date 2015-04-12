@@ -47,6 +47,7 @@ var Memory = React.createClass({
         selected.setPaired();
 
         this.setState({board: board.pair()});
+        this.isGameOver();
     } else {
         // missed hit
         board.miss(true);
@@ -60,6 +61,29 @@ var Memory = React.createClass({
             1000
         );
     }
+  },
+
+  isGameOver() {
+    var board = this.state.board,
+        totalScore = board.score[0] + board.score[1],
+        maxScore = board.maxScore;
+
+    if (totalScore < maxScore) {
+        return false;
+    }
+
+    var who = board.turn + 1;
+
+    AlertIOS.alert(
+        'Game Over',
+        `Player ${who} won!`,
+        [
+          {text: 'Alright!'},
+          {text: 'Start new', onPress: this.restartGame}
+      ]
+    );
+
+    return true;
   },
 
   onCardHide() {
