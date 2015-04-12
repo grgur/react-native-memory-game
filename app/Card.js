@@ -46,6 +46,7 @@ class Card extends React.Component {
 
     show() {
         this.setState({visible: true});
+        this.props.cardCfg.hidden = false;
         AnimationExperimental.startAnimation({
             node: this.refs.image,
             duration: 400,
