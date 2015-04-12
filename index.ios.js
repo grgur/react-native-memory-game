@@ -80,7 +80,7 @@ var Memory = React.createClass({
             if (board.flips[0] === board.flips[1]) {
                 msg = 'It\s a tie';
             } else {
-                msg = `Player ${board.flips[0] > board.flips[1] ? 1 : 2} won!`;
+                msg = `Player ${board.flips[0] < board.flips[1] ? 1 : 2} won!`;
             }
         } else {
             msg = `Player ${board.score[0] > board.score[1] ? 1 : 2} won!`;
