@@ -22,7 +22,7 @@ var {
 
 var Memory = React.createClass({
   getInitialState() {
-    return { board: new Board(4, 4), players: 1 };
+    return { board: new Board(2, 2), players: 2 };
   },
 
   restartGame() {
@@ -66,17 +66,29 @@ var Memory = React.createClass({
   isGameOver() {
     var board = this.state.board,
         totalScore = board.score[0] + board.score[1],
-        maxScore = board.maxScore;
+        maxScore = board.maxScore,
+        msg;
 
     if (totalScore < maxScore) {
         return false;
     }
 
-    var who = board.turn + 1;
+    if (this.state.players === 1) {
+        msg = 'You\'ve done it!';
+    } else {
+        if (board.score[0] === board.score[1]) {
+            if (board.flips[0] === board.flips[1]) {
+                msg = 'It\s a tie';
+            } else {
+                msg = `Player ${board.flips[0] > board.flips[1] ? 1 : 2} won!`;
+            }
+        }
+        msg = `Player ${board.score[0] > board.score[1] ? 1 : 2} won!`;
+    }
 
     AlertIOS.alert(
         'Game Over',
-        `Player ${who} won!`,
+        msg,
         [
           {text: 'Alright!'},
           {text: 'Start new', onPress: this.restartGame}
